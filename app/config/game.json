@@ -1,3 +1,5 @@
 {
-
+    "assets": [
+        {"path": "app/public/assets/background.jpg", "name": "baseBackground", "lazyLoad": false}
+    ]
 }
