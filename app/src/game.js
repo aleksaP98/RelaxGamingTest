@@ -1,6 +1,7 @@
 import Application from "./presentations/app.js";
 import AssetsController from "./controllers/assetsController.js";
 import Background from "./presentations/Background.js";
+import Reels from "./presentations/reels.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     window.game = new Game();
@@ -26,6 +27,7 @@ export default class Game{
             //5 Only when everthing is done, start game
             .then(this._createApp.bind())
             .then(this._addBackground.bind())
+            .then(this._createReels.bind())
         }
         catch(error){
             console.log(error)
@@ -80,6 +82,15 @@ export default class Game{
             }
         })
     }
+
+    _createReels = () => {
+        return new Promise((resolve, reject) => {
+            this.reels = new Reels();
+            this.stage.addChild(this.reels);
+            resolve();
+        })
+    }
+
 
     onResize = (event) => {
         this.app.renderer.resize(window.innerWidth - 17, window.innerHeight);

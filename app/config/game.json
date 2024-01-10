@@ -1,5 +1,10 @@
 {
     "assets": [
-        {"path": "app/public/assets/background.jpg", "name": "baseBackground", "lazyLoad": false}
-    ]
+        {"path": "app/public/assets/background.jpg", "name": "baseBackground", "lazyLoad": false},
+        {"path": "app/public/assets/reels/reelBackground.jpg", "name": "reelBackground", "lazyLoad": false}
+    ],
+
+    "reels": {
+        "size": 5
+    }
 }
