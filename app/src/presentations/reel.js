@@ -23,6 +23,7 @@ export default class Reel extends PIXI.Container{
         super();
         this._createModel(index);
         this._createPresentation();
+        this._createMask();
     }
 
     _createModel = (index) => {
@@ -38,6 +39,17 @@ export default class Reel extends PIXI.Container{
             this.y =  this._centerY
             this.addChild(background);
         }
+    }
+
+    _createMask = () => {
+        const mask = new PIXI.Graphics()
+        const maskX = -this._maskWidth * 1 / 2 + this.x
+        const maskY = -this._maskHeight * 1 / 2 + this.y
+
+        mask.beginFill(0xFFFFFF); // Fill color
+        mask.drawRect(maskX, maskY, this._maskWidth, this._maskHeight); // Rectangle coordinates and size
+        mask.endFill();
+        this.mask = mask;
     }
 
     createInitialSymbols = () => {
