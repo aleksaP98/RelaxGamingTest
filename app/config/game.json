@@ -1,10 +1,33 @@
 {
     "assets": [
         {"path": "app/public/assets/background.jpg", "name": "baseBackground", "lazyLoad": false},
-        {"path": "app/public/assets/reels/reelBackground.jpg", "name": "reelBackground", "lazyLoad": false}
+        {"path": "app/public/assets/reels/reelBackground.jpg", "name": "reelBackground", "lazyLoad": false},
+
+
+        {"path": "app/public/assets/symbols/symbol1.png", "name": "sym1", "lazyLoad": false},
+        {"path": "app/public/assets/symbols/symbol2.png", "name": "sym2", "lazyLoad": false},
+        {"path": "app/public/assets/symbols/symbol3.png", "name": "sym3", "lazyLoad": false},
+        {"path": "app/public/assets/symbols/symbol4.png", "name": "sym4", "lazyLoad": false},
+        {"path": "app/public/assets/symbols/symbol5.png", "name": "sym5", "lazyLoad": false},
+        {"path": "app/public/assets/symbols/symbol6.png", "name": "sym6", "lazyLoad": false},
+        {"path": "app/public/assets/symbols/symbol7.png", "name": "sym7", "lazyLoad": false},
+        {"path": "app/public/assets/symbols/symbol8.png", "name": "sym8", "lazyLoad": false}
     ],
 
     "reels": {
-        "size": 5
-    }
+        "size": 5,
+        "symbolsPerReel": 3,
+        "spinningSymbols": 30
+    },
+
+    "symbols": [
+        "sym1",
+        "sym2",
+        "sym3",
+        "sym4",
+        "sym5",
+        "sym6",
+        "sym7",
+        "sym8"
+    ]
 }

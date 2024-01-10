@@ -6,6 +6,7 @@ export default class Reels extends PIXI.Container{
     constructor(){
         super();
         this._createReels();
+        this._createInitialSymbols();
     }
 
     _createReels = () => {
@@ -16,5 +17,12 @@ export default class Reels extends PIXI.Container{
             this.reels.push(reel);
             this.addChild(reel);
         }
+    }
+
+    _createInitialSymbols = () => {
+        this.reels.forEach(reel => {
+            reel.createInitialSymbols();
+            reel.createSpinningSymbols();
+        })
     }
 }

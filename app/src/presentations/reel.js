@@ -1,4 +1,5 @@
 import Model from '../models/reel.js';
+import Symbol from './symbol.js';
 
 export default class Reel extends PIXI.Container{
     _xOffsets = {
@@ -36,6 +37,22 @@ export default class Reel extends PIXI.Container{
             this.x =  this._centerX + this._xOffsets[this.model.index];
             this.y =  this._centerY
             this.addChild(background);
+        }
+    }
+
+    createInitialSymbols = () => {
+        for(let i = 0; i< window.game.config.reels.symbolsPerReel; i++){
+            const symbol = new Symbol(this.model, i)
+            this.outcomeSymbols.push(symbol);
+            this.addChild(symbol);
+        }
+    }
+
+    createSpinningSymbols = () => {
+        for(let i = 0; i< window.game.config.reels.spinningSymbols; i++){
+            const symbol = new Symbol(null, i)
+            this.spinningSymbols.push(symbol);
+            this.addChild(symbol);
         }
     }
 }
