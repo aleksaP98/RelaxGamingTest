@@ -3,6 +3,7 @@
         {"path": "app/public/assets/background.jpg", "name": "baseBackground", "lazyLoad": false},
         {"path": "app/public/assets/reels/reelBackground.jpg", "name": "reelBackground", "lazyLoad": false},
 
+        {"path": "app/public/assets/ui/spinButton.png", "name": "spinButton", "lazyLoad": false},
 
         {"path": "app/public/assets/symbols/symbol1.png", "name": "sym1", "lazyLoad": false},
         {"path": "app/public/assets/symbols/symbol2.png", "name": "sym2", "lazyLoad": false},

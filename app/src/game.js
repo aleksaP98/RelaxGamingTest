@@ -1,5 +1,8 @@
 import Application from "./presentations/app.js";
 import AssetsController from "./controllers/assetsController.js";
+import InterfaceController from "./controllers/interfaceController.js";
+import ReelsController from "./controllers/reelsController.js";
+import AnimationController from "./controllers/animationController.js";
 import Background from "./presentations/Background.js";
 import Reels from "./presentations/reels.js";
 
@@ -28,6 +31,7 @@ export default class Game{
             .then(this._createApp.bind())
             .then(this._addBackground.bind())
             .then(this._createReels.bind())
+            .then(this._createUI.bind())
         }
         catch(error){
             console.log(error)
@@ -47,6 +51,9 @@ export default class Game{
 
     _initControllers = () => {
         this.assetsController = new AssetsController();
+        this.interfaceController = new InterfaceController();
+        this.reelsController = new ReelsController();
+        this.animationController = new AnimationController();
         return Promise.resolve();
     }
 
@@ -86,9 +93,15 @@ export default class Game{
     _createReels = () => {
         return new Promise((resolve, reject) => {
             this.reels = new Reels();
+            this.reelsController.addPresentation({name: "reels", class: this.reels})
             this.stage.addChild(this.reels);
             resolve();
         })
+    }
+
+    _createUI = () => {
+        this.interfaceController.createInterfaceContainer();
+        this.interfaceController.createSpinButton();
     }
 
 
