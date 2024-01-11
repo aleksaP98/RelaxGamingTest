@@ -22,7 +22,6 @@ export default class Reels extends PIXI.Container{
     _createInitialSymbols = () => {
         this.reels.forEach(reel => {
             reel.createInitialSymbols();
-            reel.createSpinningSymbols();
         })
     }
 }

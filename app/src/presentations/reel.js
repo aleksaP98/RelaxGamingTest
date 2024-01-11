@@ -53,18 +53,14 @@ export default class Reel extends PIXI.Container{
     }
 
     createInitialSymbols = () => {
-        for(let i = 0; i< window.game.config.reels.symbolsPerReel; i++){
+        for(let i = 0; i< window.game.config.reels.spinningSymbols; i++){
             const symbol = new Symbol(this.model, i)
-            this.outcomeSymbols.push(symbol);
+            this.spinningSymbols.push(symbol);
             this.addChild(symbol);
         }
     }
 
-    createSpinningSymbols = () => {
-        for(let i = 0; i< window.game.config.reels.spinningSymbols; i++){
-            const symbol = new Symbol(null, i)
-            this.spinningSymbols.push(symbol);
-            this.addChild(symbol);
-        }
+    generateSymbols = () => {
+        
     }
 }

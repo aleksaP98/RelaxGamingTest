@@ -6,7 +6,7 @@ export default class Symbol extends PIXI.Container{
         1: 0,
         2: 160
     }
-    _baseSpinningOffset = 320;
+    _baseSpinningOffset = -160;
 
     constructor(reel, symbolIndex){
         super();
@@ -33,18 +33,9 @@ export default class Symbol extends PIXI.Container{
         const texture = window.game.assetsController.getAsset(this.model.name);
         this.static = new PIXI.Sprite(texture)
         this.static.anchor.set(0.5, 0.5);
-        this.y +=  this._yOffsets[this.model.index];
-        this.addChild(this.static);
-    }
-
-    _createSpinningSymbol = (index) => {
-        const randomName = this._getRandomName();
-        const texture = window.game.assetsController.getAsset(randomName);
-        this.spinningSymbol = new PIXI.Sprite(texture)
-        this.spinningSymbol.anchor.set(0.5, 0.5);
-        this.y -= this._baseSpinningOffset + index * 160;
+        this.y -= this._baseSpinningOffset + this.model.index * 160;
         this.initialY = this.y;
-        this.addChild(this.spinningSymbol);
+        this.addChild(this.static);
     }
 
 }

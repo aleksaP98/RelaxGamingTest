@@ -14,26 +14,16 @@ export default class ReelsController{
     }
 
     spinReels = () => {
-        window.game.animationController.animate(this.spinReelsAnimation);
+        return this._createSpinningAnimation()
     }
 
-    spinReelsAnimation = (deltaTime) => {
+    _createSpinningAnimation = () => {
         console.log('reels spinning')
-        this.reels.reels.forEach(reel => {
-            reel.spinningSymbols.forEach(symbol => {
-                symbol.y += 10;
-            })
-        })
+        return new Promise((resolve, reject) => {
+            const timeline = gsap.timeline({onComplete: resolve});
+            const symbolTimelines = this.reels.reels.map(reel => reel.spinningSymbols.map(symbol => gsap.timeline().to(symbol, {duration: 1, y: symbol.y + 4320})))
+            timeline.add(symbolTimelines);
+        }) 
     }
-
-    stopReels = () => {
-        window.game.animationController.stopAnimation(this.spinReelsAnimation);
-        this.reels.reels.forEach(reel => {
-            reel.spinningSymbols.forEach(symbol => {
-                symbol.y = symbol.initialY
-            })
-        })
-    }
-    
 
 }

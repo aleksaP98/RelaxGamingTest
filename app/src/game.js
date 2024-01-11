@@ -2,7 +2,6 @@ import Application from "./presentations/app.js";
 import AssetsController from "./controllers/assetsController.js";
 import InterfaceController from "./controllers/interfaceController.js";
 import ReelsController from "./controllers/reelsController.js";
-import AnimationController from "./controllers/animationController.js";
 import Background from "./presentations/Background.js";
 import Reels from "./presentations/reels.js";
 
@@ -53,7 +52,6 @@ export default class Game{
         this.assetsController = new AssetsController();
         this.interfaceController = new InterfaceController();
         this.reelsController = new ReelsController();
-        this.animationController = new AnimationController();
         return Promise.resolve();
     }
 
@@ -105,7 +103,7 @@ export default class Game{
     }
 
 
-    onResize = (event) => {
+    onResize = () => {
         this.app.renderer.resize(window.innerWidth - 17, window.innerHeight);
         if(this.stage.children.length > 0){
             this.stage.children.forEach(child => {
