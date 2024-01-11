@@ -19,10 +19,10 @@ export default class Reel extends PIXI.Container{
     outcomeSymbols = [];
     spinningSymbols = [];
 
-    constructor(index){
+    constructor(options){
         super();
-        this._createModel(index);
-        this._createPresentation();
+        this._createModel(options.index);
+        this._createPresentation(options.backgroundTexture);
         this._createMask();
     }
 
@@ -30,10 +30,9 @@ export default class Reel extends PIXI.Container{
         this.model = new Model(index);
     }
 
-    _createPresentation = () => {
-        const asset = window.game.assetsController.getAsset('reelBackground');
-        if(asset){
-            const background = new PIXI.Sprite(asset)
+    _createPresentation = (texture) => {
+        if(texture && texture instanceof PIXI.Texture){
+            const background = new PIXI.Sprite(texture)
             background.anchor.set(0.5, 0.5);
             this.x =  this._centerX + this._xOffsets[this.model.index];
             this.y =  this._centerY

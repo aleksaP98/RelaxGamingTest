@@ -1,4 +1,4 @@
-import Button from "../presentations/button.js";
+import Button from "../views/button.js";
 
 export default class InterfaceController{
     constructor(){
@@ -14,7 +14,8 @@ export default class InterfaceController{
     }
 
     createSpinButton = () => {
-        this.spinButton = new Button(this.spin);
+        const spinButtonTexture = window.game.assetsController.getAsset("spinButton");
+        this.spinButton = new Button(this.spin, spinButtonTexture);
         this.spinButton.x = 550;
         this.spinButton.y = -100;
         this.interfaceContainer.addChild(this.spinButton);

@@ -1,9 +1,9 @@
-import Application from "./presentations/app.js";
+import Application from "./views/app.js";
 import AssetsController from "./controllers/assetsController.js";
 import InterfaceController from "./controllers/interfaceController.js";
 import ReelsController from "./controllers/reelsController.js";
-import Background from "./presentations/Background.js";
-import Reels from "./presentations/reels.js";
+import Background from "./views/background.js";
+import Reels from "./views/reels.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     window.game = new Game();
@@ -80,7 +80,8 @@ export default class Game{
 
     _addBackground = () => {
         return new Promise((resolve, reject) => {
-            const background = new Background();
+            const texture = this.assetsController.getAsset('baseBackground');
+            const background = new Background(texture);
             if(background){
                 this.stage.addChild(background);
                 resolve();

@@ -1,15 +1,23 @@
 export default class Button extends PIXI.Container{
-    constructor(onClickCallback, width, height){
+    constructor(onClickCallback, texture){
         super()
-        this._createButton(onClickCallback, width, height);
+        this._createButton(onClickCallback, texture);
     }
 
-    _createButton = (onClickCallback, width, height) => {
+    _createButton = (onClickCallback, texture) => {
         if(!onClickCallback)
         {
             return console.log("Missing callback for onClick")
-        }     
-        this.background = new PIXI.Sprite(window.game.assetsController.getAsset("spinButton"));
+        }
+        if(texture){
+            this.background = new PIXI.Sprite(texture);
+        }
+        else{
+            this.background = new PIXI.Graphics();
+            this.background.beginFill(0x3498db); 
+            this.background.drawRect(0, 0, 150, 150);
+            this.background.endFill();
+        }
         this.eventMode = "static";
         
         this.addChild(this.background);
