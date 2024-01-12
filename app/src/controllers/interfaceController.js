@@ -29,15 +29,14 @@ export default class InterfaceController{
         this.disableSpinButton();
     
         //spin reels
-
-        const promise = window.game.reelsController.spinReels();
-
-        promise.then(this.processSpinResult)
+        window.game.reelsController.spinReels()
+        .then(this.processSpinResult)
         //wait for server response...
     }
 
     processSpinResult = () => {
-        this.enableSpinButton();
+        window.game.reelsController.setOutcomeSymbols()
+        .then(this.enableSpinButton.bind(this))
     }
 
     stop = () => {

@@ -12,10 +12,7 @@ export default class Symbol extends PIXI.Container{
         super();
         if(reel && symbolIndex >= 0){
             this._createModel(reel, symbolIndex);
-            this._createPresentation();
-        }
-        else{
-            this._createSpinningSymbol(symbolIndex)
+            this._createStaticPresentation();
         }
     }
 
@@ -29,13 +26,21 @@ export default class Symbol extends PIXI.Container{
         this.model = new Model(reel, symbolIndex, name);
     }
 
-    _createPresentation = () => {
-        const texture = window.game.assetsController.getAsset(this.model.name);
+    _createStaticPresentation = () => {
+        const texture = this._getTexutre(this.model.name);
         this.static = new PIXI.Sprite(texture)
         this.static.anchor.set(0.5, 0.5);
         this.y -= this._baseSpinningOffset + this.model.index * 160;
         this.initialY = this.y;
         this.addChild(this.static);
+    }
+
+    _getTexutre = (name) => {
+        return window.game.assetsController.getAsset(name || this._getRandomName());
+    }
+
+    resetTexture = () => {
+        this.static.texture = this._getTexutre();
     }
 
 }

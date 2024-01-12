@@ -4,6 +4,7 @@ import InterfaceController from "./controllers/interfaceController.js";
 import ReelsController from "./controllers/reelsController.js";
 import Background from "./views/background.js";
 import Reels from "./views/reels.js";
+import GameModel from "./models/gameModel.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     window.game = new Game();
@@ -19,14 +20,10 @@ export default class Game{
     
     loadGame = () => {
         try{
-            //1. Try to connect to backend server (we dont have one so skip this)
-            //2. Load game config
             this._loadConfig()
-            //3. Initialise controllers
+            .then(this._initGameModel.bind())
             .then(this._initControllers.bind())
-            //4. Load assets
             .then(this._loadAssets.bind())
-            //5 Only when everthing is done, start game
             .then(this._createApp.bind())
             .then(this._addBackground.bind())
             .then(this._createReels.bind())
@@ -46,6 +43,10 @@ export default class Game{
         } catch (error) {
             return console.log('Error loading game config');
         }
+    }
+
+    _initGameModel = () => {
+        this.gameModel = new GameModel();
     }
 
     _initControllers = () => {
