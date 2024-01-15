@@ -24,7 +24,7 @@ export default class ReelsController{
     setOutcomeSymbols = () => {
         return new Promise((resolve, reject) => {
             const allSymbols = this.reels.reels.map(reel => reel.spinningSymbols.map(symbol => symbol));
-            window.game.gameModel.setOutcomeSymbols(allSymbols);
+            window.game.gameModel.setOutcome(allSymbols);
             this.setNewSymbols()
             .then(resolve);
         })

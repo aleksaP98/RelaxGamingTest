@@ -36,7 +36,12 @@ export default class InterfaceController{
 
     processSpinResult = () => {
         window.game.reelsController.setOutcomeSymbols()
+        .then(this.processWins.bind(this))
         .then(this.enableSpinButton.bind(this))
+    }
+
+    processWins = () => {
+        // window.game.gameModel.calculateWin();
     }
 
     stop = () => {
