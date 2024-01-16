@@ -22,6 +22,7 @@ export default class InterfaceController{
     }
 
     spin = () => {
+        console.clear();
         console.log('spin clicked')
         //Make request to server
 
@@ -41,7 +42,7 @@ export default class InterfaceController{
     }
 
     processWins = () => {
-        // window.game.gameModel.calculateWin();
+        
     }
 
     stop = () => {

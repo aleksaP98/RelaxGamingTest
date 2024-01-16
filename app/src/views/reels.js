@@ -10,7 +10,7 @@ export default class Reels extends PIXI.Container{
     }
 
     _createReels = () => {
-        const reelSize = window.game.config.reels?.size || 5;
+        const reelSize = window.game.config.reels?.numberOfReels || 5;
         
         for(let i = 0; i < reelSize; i++){
             const backgroundTexture =  window.game.assetsController.getAsset('reelBackground')

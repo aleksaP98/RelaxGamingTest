@@ -1,83 +1,84 @@
 export default class GameModel{
-    _indexConversion = {
-        27: 0,
-        28: 1,
-        29: 2
-    }
-    outcomeSymbols = [];
-
     outcomeNames = [];
 
     winningSymbols = [];
 
     payout = 0;
 
-    winningCounter = {}
+    _winningCounter = {}
 
     constructor(){
-
+        if(!window.game.config.anyways){
+            this._setWinningLines(window.game.config.winLines);
+        }
     }
 
-    _resetOutcomeSymbols = () => {
-        const reelSize = window.game.config.reels.size;
-        this.outcomeSymbols = [];
-        for(let i = 0; i < reelSize; i++){
-            this.outcomeSymbols[i] = []
-        }
+    _setWinningLines = (winLines) => {
+        this._winLines = winLines;
     }
     
-    setOutcome = (allSymbols) => {
-        this._resetOutcomeSymbols();
-        if(allSymbols?.length > 0){
-            this._setOutcomeSymbols(allSymbols); 
-            this._resetWinningCounter();
-            this._setOutcomeNames();
-            this._setDefaultMatrix();
-            this._setWins();
-        }
-    }
-
-    _setOutcomeSymbols = (allSymbols) => {
-        allSymbols.forEach((reel, reelIndex) => {
-            reel.forEach((symbol, symbolIndex) => {
-                //Only take the last 3 symbols from each reel to be the outcome symbols
-                if(symbolIndex >= 27 && symbolIndex <= 29){
-                    const realSymbolIndex = this._indexConversion[symbolIndex];
-                    this.outcomeSymbols[reelIndex][realSymbolIndex] = symbol;
-                }
-            })
-        })
+    setOutcome = () => {
+        this._resetWinningCounter();
+        this._setOutcomeNames();
+        this._setDefaultMatrix();
+        this._setWinningMatrix();
+        this._checkForWinningSymbols();
     }
 
     _setOutcomeNames = () => {
-        this.outcomeSymbols.forEach((reelSymbols, reelIndex) => {
+        this.winningSymbols = [];
+        window.game.reelsController.getOutcomeSymbols().forEach((reelSymbols, reelIndex) => {
             this.outcomeNames[reelIndex] = []
+            this.winningSymbols[reelIndex] = []
             reelSymbols.forEach((symbol, symbolIndex) => {
                 this.outcomeNames[reelIndex][symbolIndex] = symbol.model.name;
+                this.winningSymbols[reelIndex][symbolIndex] = null;
             })
         })
     }
 
     _resetWinningCounter = () => {
-        window.game.config.symbols?.forEach(symbol => this.winningCounter[symbol] = 0);
+        window.game.config.symbols?.forEach(symbol => this._winningCounter[symbol] = 0);
     }
     
     _setDefaultMatrix = () => {
-        this.winningMatrix = this.outcomeNames.map((reel, reelIndex) => reel.map((symbolName, symbolIndex) => false));
+        this._winningMatrix = this.outcomeNames.map((reel, reelIndex) => reel.map((symbolName, symbolIndex) => false));
     }
 
-    _setWins = () => {
+    _setWinningMatrix = () => {
         this.outcomeNames.forEach((reel, reelIndex) => {
             reel.forEach((symbolName, symbolIndex) => {
                 if(this._canCheck(reelIndex, symbolName)){
                     const isWin = this._isWinningSymbol(reelIndex, symbolName);
                     if(isWin){
-                        this.winningCounter[symbolName]++;
-                        this.winningMatrix[reelIndex][symbolIndex] = isWin;
+                        this._winningCounter[symbolName]++;
+                        this._winningMatrix[reelIndex][symbolIndex] = isWin;
                     }
                 }
             })
         })
+    }
+
+    _checkForWinningSymbols = () => {
+        //We only need to check the first reel for wins (first reel will have wins if we get 3+ of the same symbol)
+        if(this._winningMatrix[0].find(win => win)){
+            this._winLines.forEach(this._checkWinLine.bind(this));
+        }
+    }
+
+    _checkWinLine = (winLine) => {
+        let winCounter = 0;
+        for(let reelIndex in winLine){
+            if(reelIndex > 0 && winCounter < 1){
+                continue;
+            }
+            const reelWins = winLine[reelIndex];
+            reelWins.forEach((win, symbolIndex) => {
+               if(this._winningMatrix[reelIndex][symbolIndex] && win){
+                    winCounter++
+               }
+            })
+        }
     }
 
     _isWinningSymbol = (reelIndex, symbolName) => {
@@ -87,7 +88,7 @@ export default class GameModel{
         !!this.outcomeNames[reelIndex + 1]?.find(nextSymbol => nextSymbol === symbolName) && //Condition for all other reels, check if the next and previous reels have the same symbols
         !!this.outcomeNames[reelIndex - 1]?.find(previousSymbol => previousSymbol === symbolName); 
 
-        if(reelIndex >= 2 && this.winningCounter[symbolName] >= 2 && !isWin){
+        if(reelIndex >= 2 && this._winningCounter[symbolName] >= 2 && !isWin){
             isWin = true; //override isWin to true because we want to 3rd, 4th and 5th symbols to be winning even if there are no same symbols after them.
         }
         return isWin;
@@ -98,15 +99,14 @@ export default class GameModel{
         let canCheck = true
 
         //additional check so we dont let reel index 2,3 and 4 check win if there are wins less than 2,3 and 4 respectivly 
-        if(reelIndex >= 2 && this.winningCounter[symbolName] < reelIndex){
+        if(reelIndex >= 2 && this._winningCounter[symbolName] < reelIndex){
             canCheck = false;
         }
 
         return canCheck
     }
-    
-    getOutcomeSymbols = () => {
-        return this.outcomeSymbols;
-    }
 
+    getWinningSymbols = () => {
+        return this.winningSymbols;
+    }
 }

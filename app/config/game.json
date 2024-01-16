@@ -16,7 +16,7 @@
     ],
 
     "reels": {
-        "size": 5,
+        "numberOfReels": 5,
         "symbolsPerReel": 3,
         "spinningSymbols": 30
     },
@@ -30,5 +30,78 @@
         "sym6",
         "sym7",
         "sym8"
+    ],
+
+    "winLines": [
+        [
+            [true, false, false],
+            [true, false, false],
+            [true, false, false],
+            [true, false, false],
+            [true, false, false]
+        ],
+        [
+            [false, true, false],
+            [false, true, false],
+            [false, true, false],
+            [false, true, false],
+            [false, true, false]
+        ],
+        [
+            [false, false, true],
+            [false, false, true],
+            [false, false, true],
+            [false, false, true],
+            [false, false, true]
+        ],
+        [
+            [false, false, true],
+            [false, true, false],
+            [true, false, false],
+            [false, true, false],
+            [false, false, true]
+        ],
+        [
+            [true, false, false],
+            [false, true, false],
+            [false, false, true],
+            [false, true, false],
+            [true, false, false]
+        ],
+        [
+            [true, false, false],
+            [true, false, false],
+            [false, true, false],
+            [false, false, true],
+            [false, false, true]
+        ],
+        [
+            [false, false, true],
+            [false, false, true],
+            [false, true, false],
+            [true, false, false],
+            [true, false, false]
+        ],
+        [
+            [false, true, false],
+            [false, true, false],
+            [true, false, false],
+            [true, false, false],
+            [true, false, false]
+        ],
+        [
+            [false, true, false],
+            [false, true, false],
+            [false, false, true],
+            [false, false, true],
+            [false, false, true]
+        ],
+        [
+            [true, false, false],
+            [false, true, false],
+            [true, false, false],
+            [false, true, false],
+            [true, false, false]
+        ]
     ]
 }

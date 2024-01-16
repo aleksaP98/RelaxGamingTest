@@ -8,10 +8,10 @@ export default class Symbol extends PIXI.Container{
     }
     _baseSpinningOffset = -160;
 
-    constructor(reel, symbolIndex){
+    constructor(reel, symbolIndex, name){
         super();
         if(reel && symbolIndex >= 0){
-            this._createModel(reel, symbolIndex);
+            this._createModel(reel, symbolIndex, name);
             this._createStaticPresentation();
         }
     }
@@ -21,9 +21,8 @@ export default class Symbol extends PIXI.Container{
         return `sym${randomIndex}`;
     }
 
-    _createModel = (reel, symbolIndex) => {
-        const name = this._getRandomName();
-        this.model = new Model(reel, symbolIndex, name);
+    _createModel = (reel, symbolIndex, name) => {
+        this.model = new Model(reel, symbolIndex, name || this._getRandomName());
     }
 
     _createStaticPresentation = () => {
