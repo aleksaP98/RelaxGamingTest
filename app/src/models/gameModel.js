@@ -3,9 +3,11 @@ export default class GameModel{
 
     winningSymbols = [];
 
-    payout = 0;
+    _payout = 0;
 
     _winningCounter = {}
+
+    _spinCounter = 0;
 
     constructor(){
         if(!window.game.config.anyways){
@@ -23,6 +25,15 @@ export default class GameModel{
         this._setDefaultMatrix();
         this._setWinningMatrix();
         this._checkForWinningSymbols();
+        this._setPayout();
+    }
+
+    incrementSpinCounter = () => {
+        this._spinCounter++
+    }
+
+    getSpinCounter = () => {
+        return this._spinCounter;
     }
 
     _setOutcomeNames = () => {
@@ -67,15 +78,11 @@ export default class GameModel{
     }
 
     _checkWinLine = (winLine) => {
-        let winCounter = 0;
         for(let reelIndex in winLine){
-            if(reelIndex > 0 && winCounter < 1){
-                continue;
-            }
             const reelWins = winLine[reelIndex];
             reelWins.forEach((win, symbolIndex) => {
                if(this._winningMatrix[reelIndex][symbolIndex] && win){
-                    winCounter++
+                    this.winningSymbols[reelIndex][symbolIndex] = window.game.reelsController.getOutcomeSymbols()[reelIndex][symbolIndex];
                }
             })
         }
@@ -106,7 +113,47 @@ export default class GameModel{
         return canCheck
     }
 
+    _setPayout = () => {
+        this._payout = 0;
+        if(this.winningSymbols[0].some(winSym => winSym)){
+            this._payout = Math.random() * 100
+            this._spinCounter = 0;
+        }
+    }
+
+    getPayout = () => {
+        return this._payout;
+    }
+
     getWinningSymbols = () => {
         return this.winningSymbols;
     }
+
+    getNewSymbolObjects = () => {
+        const seed = this._spinCounter >= 3 ? this.getWinningSeed() : this.getRandomSeed();
+        const splitSeed = seed.split("");
+
+        return splitSeed.map(this._mapIndexToObject);
+    }
+
+    _mapIndexToObject = (singleNumber, index) => {
+        return {
+            reelIndex: index % window.game.config.reels.numberOfReels,
+            symbolIndex: Math.floor(index / window.game.config.reels.numberOfReels),
+            symbolName: window.game.config.symbols.find(symbol => symbol[3] === singleNumber) || "sym1" //sym0 doesnt exist so we will just hardcode it to 1
+        }
+    }
+
+    getRandomSeed = () => {
+        return String(Math.floor(Math.random() * 9e14) + 1e14)
+    }
+
+    getWinningSeed = () => {
+        if(!window.game.config.winningSeeds){
+            return console.log("winnig seeds array missing in game config")
+        }
+        const randomIndex = Math.floor(Math.random() * window.game.config.winningSeeds.length)
+        return window.game.config.winningSeeds[randomIndex];
+    }
+
 }

@@ -59,11 +59,16 @@ export default class Reel extends PIXI.Container{
         }
     }
 
-    createNewReelSet = (outcomeSymbols) => {
+    createNewReelSet = (outcomeSymbols, newSymbols) => {
         for(let i = 0; i< window.game.config.reels.spinningSymbols; i++){
             const reelSyms = outcomeSymbols.find((reelSymbols, reelIndex) => reelIndex === this.model.index);
             const outcomeSym = reelSyms?.find((symbol, symbolIndex) => symbolIndex === i)
-            const symbol = outcomeSym || new Symbol(this.model, i)
+
+            const reelNewSyms = newSymbols.find((reelSymbols, reelIndex) => reelIndex === this.model.index);
+            const newSym = reelNewSyms?.find((symbol, symbolIndex) => symbol.model.index === i)
+
+
+            const symbol = outcomeSym || newSym || new Symbol(this.model, i)
             this.spinningSymbols.push(symbol);
             this.addChild(symbol);
         }

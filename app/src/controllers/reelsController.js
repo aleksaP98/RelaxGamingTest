@@ -51,8 +51,10 @@ export default class ReelsController{
     _resetOutcomeSymbols = () => {
         const reelSize = window.game.config.reels.numberOfReels;
         this.outcomeSymbols = [];
+        this.newSymbols = []
         for(let i = 0; i < reelSize; i++){
             this.outcomeSymbols[i] = []
+            this.newSymbols[i] = []
         }
     }
 
@@ -64,14 +66,42 @@ export default class ReelsController{
         })
     }
 
+    createNewReelSet = () => {
+        const outcomeSymbols = this.getOutcomeSymbols();
+        const newSymbols = this.getNewSymbols();
+        this.reels.reels.forEach(reel => reel.createNewReelSet(outcomeSymbols, newSymbols));
+    }
     
     getOutcomeSymbols = () => {
         return this.outcomeSymbols;
     }
 
-    createNewReelSet = () => {
-        this.reels.reels.forEach(reel => reel.createNewReelSet(this.outcomeSymbols));
+    getNewSymbols = () => {
+        const newSymbols = window.game.gameModel.getNewSymbolObjects();
+        const symbolsPerReel = window.game.config.reels.symbolsPerReel
+        this.newSymbols.forEach((reel,reelIndex) => {
+            for(let symbolIndex = 0; symbolIndex < symbolsPerReel; symbolIndex++){
+                const newSymbolName =  newSymbols.find(newSym => newSym.reelIndex === reelIndex && newSym.symbolIndex === symbolIndex)?.symbolName;
+                const realSymbolIndex = Number(Object.keys(this._indexConversion)[symbolIndex]);
+                this.newSymbols[reelIndex][symbolIndex] = new Symbol(this.reels.reels[reelIndex], realSymbolIndex, newSymbolName)
+            }
+        })
+        return this.newSymbols;
     }
+
+    animateWins = () => {
+        return new Promise((resolve, reject) => {
+            const timeline = gsap.timeline({onComplete: resolve})
+            const symbolTimelines =  window.game.gameModel.getWinningSymbols().map(reelSymbolWins => reelSymbolWins.map(winSymbol => {
+                if(winSymbol){
+                    return gsap.timeline().to(winSymbol.scale, {duration: 1, x: 1.5, y: 1.5})
+                    .to(winSymbol.scale, {duration: 0.5, x: 1, y: 1})
+                }
+            }))
+            timeline.add(symbolTimelines)
+        })
+    }
+
 
     destroySymbols = () => {
         this.reels.reels.forEach(reel => reel.destorySpinningSymbol());

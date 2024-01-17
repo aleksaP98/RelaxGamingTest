@@ -25,7 +25,7 @@ export default class InterfaceController{
         console.clear();
         console.log('spin clicked')
         //Make request to server
-
+        window.game.gameModel.incrementSpinCounter();
         //disable spin
         this.disableSpinButton();
     
@@ -42,7 +42,11 @@ export default class InterfaceController{
     }
 
     processWins = () => {
-        
+        let promise = Promise.resolve();
+        if(window.game.gameModel.getPayout() > 0){
+            promise = promise.then(window.game.reelsController.animateWins.bind(window.game.reelsController));
+        }
+        return promise;
     }
 
     stop = () => {
