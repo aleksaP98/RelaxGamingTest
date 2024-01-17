@@ -12,7 +12,8 @@
         {"path": "app/public/assets/symbols/symbol5.png", "name": "sym5", "lazyLoad": false},
         {"path": "app/public/assets/symbols/symbol6.png", "name": "sym6", "lazyLoad": false},
         {"path": "app/public/assets/symbols/symbol7.png", "name": "sym7", "lazyLoad": false},
-        {"path": "app/public/assets/symbols/symbol8.png", "name": "sym8", "lazyLoad": false}
+        {"path": "app/public/assets/symbols/symbol8.png", "name": "sym8", "lazyLoad": false},
+        {"path": "app/public/assets/symbols/symbol9.png", "name": "sym9", "lazyLoad": false}
     ],
 
     "reels": {
@@ -29,7 +30,8 @@
         "sym5",
         "sym6",
         "sym7",
-        "sym8"
+        "sym8",
+        "sym9"
     ],
 
     "winLines": [
@@ -103,5 +105,5 @@
             [false, true, false],
             [true, false, false]
         ]
-    ]
+        ]
 }
