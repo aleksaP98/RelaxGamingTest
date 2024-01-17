@@ -22,7 +22,7 @@ export default class Reel extends PIXI.Container{
     constructor(options){
         super();
         this._createModel(options.index);
-        this._createPresentation(options.backgroundTexture);
+        this._createView(options.backgroundTexture);
         this._createMask();
     }
 
@@ -30,7 +30,7 @@ export default class Reel extends PIXI.Container{
         this.model = new Model(index);
     }
 
-    _createPresentation = (texture) => {
+    _createView = (texture) => {
         if(texture && texture instanceof PIXI.Texture){
             const background = new PIXI.Sprite(texture)
             background.anchor.set(0.5, 0.5);

@@ -1,4 +1,4 @@
-import ReelPresentation from './reel.js';
+import ReelView from './reel.js';
 
 export default class Reels extends PIXI.Container{
     reels = [];
@@ -14,7 +14,7 @@ export default class Reels extends PIXI.Container{
         
         for(let i = 0; i < reelSize; i++){
             const backgroundTexture =  window.game.assetsController.getAsset('reelBackground')
-            const reel = new ReelPresentation({index: i, backgroundTexture});
+            const reel = new ReelView({index: i, backgroundTexture});
             this.reels.push(reel);
             this.addChild(reel);
         }

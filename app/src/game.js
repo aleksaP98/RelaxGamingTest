@@ -93,7 +93,7 @@ export default class Game{
     _createReels = () => {
         return new Promise((resolve, reject) => {
             this.reels = new Reels();
-            this.reelsController.addPresentation({name: "reels", class: this.reels})
+            this.reelsController.addView({name: "reels", class: this.reels})
             this.stage.addChild(this.reels);
             resolve();
         })
@@ -102,6 +102,9 @@ export default class Game{
     _createUI = () => {
         this.interfaceController.createInterfaceContainer();
         this.interfaceController.createSpinButton();
+        this.interfaceController.createGameFooter();
+        this.interfaceController.createBalanceView();
+        this.interfaceController.createBetView();
     }
 
 

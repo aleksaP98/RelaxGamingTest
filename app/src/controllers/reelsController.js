@@ -10,12 +10,12 @@ export default class ReelsController{
     
     }
 
-    addPresentation = (presentation) => {
-        if(!presentation.name || !presentation.class){
-            console.log("CANT ADD PRESENTATION")
+    addView = (view) => {
+        if(!view.name || !view.class){
+            console.log("CANT ADD VIEW")
         }
         else{
-            this[presentation.name] = presentation.class;
+            this[view.name] = view.class;
         }
     }
 

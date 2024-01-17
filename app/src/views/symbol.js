@@ -12,7 +12,7 @@ export default class Symbol extends PIXI.Container{
         super();
         if(reel && symbolIndex >= 0){
             this._createModel(reel, symbolIndex, name);
-            this._createStaticPresentation();
+            this._createStatic();
         }
     }
 
@@ -25,7 +25,7 @@ export default class Symbol extends PIXI.Container{
         this.model = new Model(reel, symbolIndex, name || this._getRandomName());
     }
 
-    _createStaticPresentation = () => {
+    _createStatic = () => {
         const texture = this._getTexutre(this.model.name);
         this.static = new PIXI.Sprite(texture)
         this.static.anchor.set(0.5, 0.5);

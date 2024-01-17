@@ -5,9 +5,15 @@ export default class GameModel{
 
     _payout = 0;
 
-    _winningCounter = {}
+    _winningCounter = {};
 
     _spinCounter = 0;
+
+    _balance = 1000;
+
+    _betRange = [1, 5, 10, 50, 100];
+
+    _betIndex = 0;
 
     constructor(){
         if(!window.game.config.anyways){
@@ -156,4 +162,32 @@ export default class GameModel{
         return window.game.config.winningSeeds[randomIndex];
     }
 
+    getBalance = () => {
+        return this._balance;
+    }
+
+    setBalance = (newBalance) => {
+        this._balance = newBalance
+    }
+
+    getBet = () => {
+        return this._betRange[this._betIndex]
+    }
+
+    increaseBet = () =>{
+        if(this._betRange[this._betIndex + 1]){
+            this._betIndex++
+        }
+    }
+
+    decreaseBet = () =>{
+        if(this._betRange[this._betIndex - 1]){
+            this._betIndex--
+        }
+    }
+
+    placeBet = () => {
+        this.setBalance(this._balance - this.getBet());
+    }
+ 
 }
