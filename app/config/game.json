@@ -25,15 +25,15 @@
     },
 
     "symbols": [
-        "sym1",
-        "sym2",
-        "sym3",
-        "sym4",
-        "sym5",
-        "sym6",
-        "sym7",
-        "sym8",
-        "sym9"
+        {"name": "sym1",  "payout": 0.2},
+        {"name": "sym2",  "payout": 0.3},
+        {"name": "sym3",  "payout": 0.4},
+        {"name": "sym4",  "payout": 0.5},
+        {"name": "sym5",  "payout": 1},
+        {"name": "sym6",  "payout": 2},
+        {"name": "sym7",  "payout": 5},
+        {"name": "sym8",  "payout": 10},
+        {"name": "sym9",  "payout": 20}
     ],
 
     "winLines": [

@@ -72,7 +72,9 @@ export default class InterfaceController{
     processWins = () => {
         let promise = Promise.resolve();
         if(window.game.gameModel.getPayout() > 0){
-            promise = promise.then(window.game.reelsController.animateWins.bind(window.game.reelsController));
+            promise = promise.then(window.game.reelsController.animateWins.bind(window.game.reelsController))
+            .then(window.game.reelsController.animatePayout.bind(window.game.reelsController))
+            .then(this.balance.updateBalance.bind(this.balance, window.game.gameModel.getBalance()))
         }
         return promise;
     }

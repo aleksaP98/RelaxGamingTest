@@ -83,7 +83,7 @@ export default class ReelsController{
             for(let symbolIndex = 0; symbolIndex < symbolsPerReel; symbolIndex++){
                 const newSymbolName =  newSymbols.find(newSym => newSym.reelIndex === reelIndex && newSym.symbolIndex === symbolIndex)?.symbolName;
                 const realSymbolIndex = Number(Object.keys(this._indexConversion)[symbolIndex]);
-                this.newSymbols[reelIndex][symbolIndex] = new Symbol(this.reels.reels[reelIndex], realSymbolIndex, newSymbolName)
+                this.newSymbols[reelIndex][symbolIndex] = new Symbol(this.reels.reels[reelIndex], realSymbolIndex, newSymbolName.name)
             }
         })
         return this.newSymbols;
@@ -102,6 +102,31 @@ export default class ReelsController{
         })
     }
 
+    animatePayout = () => {
+        return new Promise((resolve, reject) => {
+            const timeline = gsap.timeline()
+            const resetTimeline = gsap.timeline({onComplete: resolve})
+
+            timeline.to(this.payout, {duration: 0.5, alpha: 1})
+            timeline.call(this.payout.setPayout, [window.game.gameModel.getPayout()], this.payout);
+            timeline.add("start")
+            timeline.to(this.payout.payoutValue, {duration: 1, x:260, y: 890}, "start");
+            timeline.to(this.payout.payoutValue.scale, {duration: 0.5, x: 0, y: 0}, "start+=0.5");
+            timeline.to(this.payout, {duration: 0.5, alpha: 0})
+
+            resetTimeline.call(this.resetPayoutValuePosition, null, 0);
+
+            timeline.add(resetTimeline);
+        })
+    }
+
+    resetPayoutValuePosition = () => {
+        const centerX = window.game.app.screen.width / 2
+        const centerY = window.game.app.screen.height / 2
+
+        this.payout.payoutValue.position.set(centerX, centerY);
+        this.payout.payoutValue.scale.set(1, 1);
+    }
 
     destroySymbols = () => {
         this.reels.reels.forEach(reel => reel.destorySpinningSymbol());

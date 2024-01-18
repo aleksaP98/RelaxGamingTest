@@ -5,6 +5,7 @@ import ReelsController from "./controllers/reelsController.js";
 import Background from "./views/background.js";
 import Reels from "./views/reels.js";
 import GameModel from "./models/gameModel.js";
+import Payout from "./views/payout.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     window.game = new Game();
@@ -27,6 +28,7 @@ export default class Game{
             .then(this._createApp.bind())
             .then(this._addBackground.bind())
             .then(this._createReels.bind())
+            .then(this._createPayoutView.bind(this))
             .then(this._createUI.bind())
         }
         catch(error){
@@ -99,12 +101,24 @@ export default class Game{
         })
     }
 
+    _createPayoutView = () => {
+        return new Promise((resolve, reject) => {
+            const payoutView = new Payout();
+            this.reelsController.addView({name: "payout", class: payoutView});
+            this.stage.addChild(payoutView);
+            resolve();
+        })
+    }
+
     _createUI = () => {
-        this.interfaceController.createInterfaceContainer();
-        this.interfaceController.createSpinButton();
-        this.interfaceController.createGameFooter();
-        this.interfaceController.createBalanceView();
-        this.interfaceController.createBetView();
+        return new Promise((resolve, reject) => {
+            this.interfaceController.createInterfaceContainer();
+            this.interfaceController.createSpinButton();
+            this.interfaceController.createGameFooter();
+            this.interfaceController.createBalanceView();
+            this.interfaceController.createBetView();
+            resolve();
+        })
     }
 
 

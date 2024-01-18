@@ -32,6 +32,7 @@ export default class GameModel{
         this._setWinningMatrix();
         this._checkForWinningSymbols();
         this._setPayout();
+        this.setBalance(this._balance + this._payout);
     }
 
     incrementSpinCounter = () => {
@@ -55,7 +56,7 @@ export default class GameModel{
     }
 
     _resetWinningCounter = () => {
-        window.game.config.symbols?.forEach(symbol => this._winningCounter[symbol] = 0);
+        window.game.config.symbols?.forEach(symbol => this._winningCounter[symbol.name] = 0);
     }
     
     _setDefaultMatrix = () => {
@@ -122,8 +123,14 @@ export default class GameModel{
     _setPayout = () => {
         this._payout = 0;
         if(this.winningSymbols[0].some(winSym => winSym)){
-            this._payout = Math.random() * 100
             this._spinCounter = 0;
+            this.winningSymbols.forEach(reelWininnings => reelWininnings.forEach(winSymbol => {
+                if(winSymbol){
+                   this._payout += winSymbol.model.payout
+                }
+            }));
+            this._payout = Math.round(this._payout * this.getBet());
+           
         }
     }
 
@@ -146,7 +153,7 @@ export default class GameModel{
         return {
             reelIndex: index % window.game.config.reels.numberOfReels,
             symbolIndex: Math.floor(index / window.game.config.reels.numberOfReels),
-            symbolName: window.game.config.symbols.find(symbol => symbol[3] === singleNumber) || "sym1" //sym0 doesnt exist so we will just hardcode it to 1
+            symbolName: window.game.config.symbols.find(symbol => symbol.name[3] === singleNumber) || "sym1" //sym0 doesnt exist so we will just hardcode it to 1
         }
     }
 
