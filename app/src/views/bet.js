@@ -53,7 +53,7 @@ export default class Bet extends PIXI.Container{
 
     _updatePosition = () => {
         this.y = 20
-        this.x = 1500
+        this.x = window.game.app.screen.width / 2 + 450
     }
 
     updateBetValue = (newBet) => {
