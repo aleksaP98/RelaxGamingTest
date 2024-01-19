@@ -1,7 +1,8 @@
 {
     "assets": [
         {"path": "app/public/assets/background.jpg", "name": "baseBackground", "lazyLoad": false},
-        {"path": "app/public/assets/reels/reelBackground.jpg", "name": "reelBackground", "lazyLoad": false},
+        {"path": "app/public/assets/reels/reelBackground.png", "name": "reelBackground", "lazyLoad": false},
+        {"path": "app/public/assets/reels/frame.png", "name": "reelsFrame", "lazyLoad": false},
 
         {"path": "app/public/assets/ui/spinButton.png", "name": "spinButton", "lazyLoad": false},
         {"path": "app/public/assets/ui/betDecrease.png", "name": "betDecrease", "lazyLoad": false},

@@ -2,10 +2,17 @@ import ReelView from './reel.js';
 
 export default class Reels extends PIXI.Container{
     reels = [];
+
+    _centerX = window.game.app.screen.width / 2;
+    _centerY = window.game.app.screen.height / 2;
+
+
     //This class is used as a container for single reels
     constructor(){
         super();
+        this._updatePosition();
         this._createReels();
+        this._createReelsFrame();
         this._createInitialSymbols();
     }
 
@@ -17,6 +24,14 @@ export default class Reels extends PIXI.Container{
             const reel = new ReelView({index: i, backgroundTexture});
             this.reels.push(reel);
             this.addChild(reel);
+            reel.createMask()
+        }
+    }
+    _createReelsFrame = () => {
+        if(window.game.assetsController.getAsset('reelsFrame')){
+            const frame = new PIXI.Sprite(window.game.assetsController.getAsset('reelsFrame'));
+            frame.anchor.set(0.5, 0.5);
+            this.addChild(frame);
         }
     }
 
@@ -24,5 +39,11 @@ export default class Reels extends PIXI.Container{
         this.reels.forEach(reel => {
             reel.createInitialReelSet();
         })
+    }
+
+
+    _updatePosition = () => {
+        this.x =  this._centerX;
+        this.y =  this._centerY;
     }
 }

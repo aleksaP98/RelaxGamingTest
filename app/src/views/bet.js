@@ -3,6 +3,7 @@ export default class Bet extends PIXI.Container{
         super()
         this._createBetText(options);
         this._createBetValue(options);
+        this._updatePosition();
     }
 
     _createBetText = (options) => {
@@ -16,7 +17,6 @@ export default class Bet extends PIXI.Container{
         }
 
         const text = new PIXI.Text("BET:", style)
-        text.y = 25
         text.x = 950
         this.addChild(text);
     }
@@ -32,9 +32,12 @@ export default class Bet extends PIXI.Container{
         }
 
         this.betValue = new PIXI.Text(options.initialBet || 1, style)
-        this.betValue.y = 25
         this.betValue.x = 1025
         this.addChild(this.betValue);
+    }
+
+    _updatePosition = () => {
+        this.y = 20
     }
 
     updateBetValue = (newBet) => {

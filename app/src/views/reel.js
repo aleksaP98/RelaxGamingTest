@@ -12,9 +12,6 @@ export default class Reel extends PIXI.Container{
 
     _maskWidth = 210;
     _maskHeight = 490;
-    
-    _centerX = window.game.app.screen.width / 2;
-    _centerY = window.game.app.screen.height / 2;
 
     outcomeSymbols = [];
     spinningSymbols = [];
@@ -23,7 +20,6 @@ export default class Reel extends PIXI.Container{
         super();
         this._createModel(options.index);
         this._createView(options.backgroundTexture);
-        this._createMask();
     }
 
     _createModel = (index) => {
@@ -34,16 +30,15 @@ export default class Reel extends PIXI.Container{
         if(texture && texture instanceof PIXI.Texture){
             const background = new PIXI.Sprite(texture)
             background.anchor.set(0.5, 0.5);
-            this.x =  this._centerX + this._xOffsets[this.model.index];
-            this.y =  this._centerY
+            this.x += this._xOffsets[this.model.index];
             this.addChild(background);
         }
     }
 
-    _createMask = () => {
+    createMask = () => {
         const mask = new PIXI.Graphics()
-        const maskX = -this._maskWidth * 1 / 2 + this.x
-        const maskY = -this._maskHeight * 1 / 2 + this.y
+        const maskX = -this._maskWidth * 1 / 2 + this.parent.x + this.x
+        const maskY = -this._maskHeight * 1 / 2 + this.parent.y 
 
         mask.beginFill(0xFFFFFF); // Fill color
         mask.drawRect(maskX, maskY, this._maskWidth, this._maskHeight); // Rectangle coordinates and size

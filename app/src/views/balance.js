@@ -3,6 +3,7 @@ export default class Balance extends PIXI.Container{
         super()
         this._createBalanceText(options);
         this._createBalanceValue(options);
+        this._updatePosition();
     }
 
     _createBalanceText = (options) => {
@@ -16,7 +17,6 @@ export default class Balance extends PIXI.Container{
         }
 
         const text = new PIXI.Text("BALANCE:", style)
-        text.y = 25
         text.x = 120
         this.addChild(text);
     }
@@ -32,9 +32,12 @@ export default class Balance extends PIXI.Container{
         }
 
         this.balanceValue = new PIXI.Text(options.initialBalance || 1000, style)
-        this.balanceValue.y = 25
         this.balanceValue.x = 250
         this.addChild(this.balanceValue);
+    }
+
+    _updatePosition = () => {
+        this.y = 20
     }
 
     updateBalance = (value) => {
