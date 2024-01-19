@@ -1,6 +1,7 @@
+import Container from './container.js';
 import ReelView from './reel.js';
 
-export default class Reels extends PIXI.Container{
+export default class Reels extends Container{
     reels = [];
 
     _centerX = window.game.app.screen.width / 2;
@@ -14,6 +15,7 @@ export default class Reels extends PIXI.Container{
         this._createReels();
         this._createReelsFrame();
         this._createInitialSymbols();
+        this._initialSetup();
     }
 
     _createReels = () => {

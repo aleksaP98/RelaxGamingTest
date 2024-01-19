@@ -1,9 +1,13 @@
-export default class Balance extends PIXI.Container{
+import Container from "./container.js";
+import Text from "./text.js";
+
+export default class Balance extends Container{
     constructor(options = {}){
         super()
         this._createBalanceText(options);
         this._createBalanceValue(options);
         this._updatePosition();
+        this._initialSetup();
     }
 
     _createBalanceText = (options) => {
@@ -16,8 +20,10 @@ export default class Balance extends PIXI.Container{
             strokeThickness: 2
         }
 
-        const text = new PIXI.Text("BALANCE:", style)
+        const text = new Text({text: "BALANCE:", style})
         text.x = 120
+        text.id = "bal"
+        text._initialSetup();
         this.addChild(text);
     }
 
@@ -31,8 +37,10 @@ export default class Balance extends PIXI.Container{
             strokeThickness: 2
         }
 
-        this.balanceValue = new PIXI.Text(options.initialBalance || 1000, style)
+        this.balanceValue = new Text({text: options.initialBalance, style})
         this.balanceValue.x = 250
+        this.balanceValue.id = "asd"
+        this.balanceValue._initialSetup();
         this.addChild(this.balanceValue);
     }
 

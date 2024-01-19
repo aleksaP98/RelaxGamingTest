@@ -125,9 +125,19 @@ export default class Game{
     onResize = () => {
         this.app.renderer.resize(window.innerWidth - 17, window.innerHeight);
         if(this.stage.children.length > 0){
-            this.stage.children.forEach(child => {
-                child.scale.set(this.app.renderer.width / this.initialWidth, this.app.renderer.height / this.initialHeight);
-            })
+            this.stage.children.forEach(this.repositionElement)
+        }
+    }
+
+    repositionElement = (element) => {
+        if(element.initialX !== undefined && element.initialY !== undefined){
+            const scale = Math.min(window.innerWidth / this.initialWidth, window.innerHeight / this.initialHeight);
+            element.scale.set(scale);
+            element.x = element.initialX * scale
+            element.y = element.initialY * scale
+        }
+        if(element.children.length){
+            element.children.forEach(this.repositionElement)
         }
     }
 }

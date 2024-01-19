@@ -1,9 +1,12 @@
-export default class Payout extends PIXI.Container{
+import Container from "./container.js";
+
+export default class Payout extends Container{
     constructor(){
         super()
         this.createOverlayView();
         this.createPayoutView();
         this.alpha = 0;
+        this._initialSetup()
     }
 
     createOverlayView = () => {

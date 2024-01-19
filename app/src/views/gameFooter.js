@@ -1,7 +1,10 @@
-export default class GameFooter extends PIXI.Container{
+import Container from "./container.js";
+
+export default class GameFooter extends Container{
     constructor(){
         super();
         this._createFooter();
+        this._initialSetup();
     }
 
     _createFooter = () => {

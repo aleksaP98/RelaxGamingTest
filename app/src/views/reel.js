@@ -1,7 +1,9 @@
 import Model from '../models/reel.js';
+import Container from './container.js';
+import Graphics from './graphics.js';
 import Symbol from './symbol.js';
 
-export default class Reel extends PIXI.Container{
+export default class Reel extends Container{
     _xOffsets = {
         0: -400,
         1: -200,
@@ -20,6 +22,7 @@ export default class Reel extends PIXI.Container{
         super();
         this._createModel(options.index);
         this._createView(options.backgroundTexture);
+        this._initialSetup();
     }
 
     _createModel = (index) => {
@@ -36,13 +39,15 @@ export default class Reel extends PIXI.Container{
     }
 
     createMask = () => {
-        const mask = new PIXI.Graphics()
-        const maskX = -this._maskWidth * 1 / 2 + this.parent.x + this.x
-        const maskY = -this._maskHeight * 1 / 2 + this.parent.y 
+        const mask = new Graphics
+        const maskX = -this._maskWidth * 1 / 2
+        const maskY = -this._maskHeight * 1 / 2
 
         mask.beginFill(0xFFFFFF); // Fill color
         mask.drawRect(maskX, maskY, this._maskWidth, this._maskHeight); // Rectangle coordinates and size
         mask.endFill();
+        mask._initialSetup()
+        this.addChild(mask)
         this.mask = mask;
     }
 

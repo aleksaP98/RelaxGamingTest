@@ -1,4 +1,7 @@
-export default class Button extends PIXI.Container{
+import Container from "./container.js";
+import Spirte from "./sprite.js";
+
+export default class Button extends Container{
     constructor(onClickCallback, texture){
         super()
         this._createButton(onClickCallback, texture);
@@ -10,7 +13,8 @@ export default class Button extends PIXI.Container{
             return console.log("Missing callback for onClick")
         }
         if(texture){
-            this.background = new PIXI.Sprite(texture);
+            this.background = new Spirte(texture);
+            this.background._initialSetup();
         }
         else{
             this.background = new PIXI.Graphics();

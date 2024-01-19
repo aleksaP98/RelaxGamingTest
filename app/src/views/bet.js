@@ -1,9 +1,12 @@
-export default class Bet extends PIXI.Container{
+import Container from "./container.js";
+
+export default class Bet extends Container{
     constructor(options = {}){
         super()
         this._createBetText(options);
         this._createBetValue(options);
         this._updatePosition();
+        this._initialSetup();
     }
 
     _createBetText = (options) => {

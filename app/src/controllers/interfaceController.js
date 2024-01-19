@@ -1,6 +1,7 @@
 import Balance from "../views/balance.js";
 import Bet from "../views/bet.js";
 import Button from "../views/button.js";
+import Container from "../views/container.js";
 import GameFooter from "../views/gameFooter.js";
 
 export default class InterfaceController{
@@ -9,7 +10,8 @@ export default class InterfaceController{
     }
 
     createInterfaceContainer = () => {
-        this.interfaceContainer = new PIXI.Container();
+        this.interfaceContainer = new Container();
+        this.interfaceContainer._initialSetup();
         window.game.stage.addChild(this.interfaceContainer);
     }
 
@@ -18,6 +20,7 @@ export default class InterfaceController{
         this.spinButton = new Button(this.spin, spinButtonTexture);
         this.spinButton.x = window.game.app.screen.width / 2 + 550;
         this.spinButton.y = window.game.app.screen.height / 2 -100;
+        this.spinButton._initialSetup()
         this.interfaceContainer.addChild(this.spinButton);
     }
     createGameFooter = () => {
@@ -37,6 +40,8 @@ export default class InterfaceController{
         betDecrease.x = 870
         betIncrease.y = 10
         betDecrease.y = 10
+        betIncrease._initialSetup()
+        betDecrease._initialSetup()
         this.footer.addChild(this.bet);
         this.footer.addChild(betIncrease);
         this.footer.addChild(betDecrease);
