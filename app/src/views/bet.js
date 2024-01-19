@@ -1,8 +1,11 @@
+import Button from "./button.js";
+
 export default class Bet extends PIXI.Container{
     constructor(options = {}){
         super()
         this._createBetText(options);
         this._createBetValue(options);
+        this._createBetButtons(options);
         this._updatePosition();
     }
 
@@ -17,7 +20,6 @@ export default class Bet extends PIXI.Container{
         }
 
         const text = new PIXI.Text("BET:", style)
-        text.x = 950
         this.addChild(text);
     }
 
@@ -32,12 +34,26 @@ export default class Bet extends PIXI.Container{
         }
 
         this.betValue = new PIXI.Text(options.initialBet || 1, style)
-        this.betValue.x = 1025
+        this.betValue.x = 100
         this.addChild(this.betValue);
+    }
+
+    _createBetButtons = (options) => {
+        const betIncrease = new Button(options.onBetIncrease, window.game.assetsController.getAsset('betIncrease'));
+        const betDecrease = new Button(options.onBetDecrease, window.game.assetsController.getAsset('betDecrease'));
+
+        betIncrease.x = 150
+        betDecrease.x = -80
+        betIncrease.y = -10
+        betDecrease.y = -10
+
+        this.addChild(betIncrease)
+        this.addChild(betDecrease)
     }
 
     _updatePosition = () => {
         this.y = 20
+        this.x = 1500
     }
 
     updateBetValue = (newBet) => {

@@ -29,17 +29,8 @@ export default class InterfaceController{
         this.footer.addChild(this.balance);
     }
     createBetView = () => {
-        this.bet = new Bet({initialBet: window.game.gameModel.getBet()});
-        const betIncrease = new Button(this.onBetIncrease, window.game.assetsController.getAsset('betIncrease'));
-        const betDecrease = new Button(this.onBetDecrease, window.game.assetsController.getAsset('betDecrease'));
-
-        betIncrease.x = 1100
-        betDecrease.x = 870
-        betIncrease.y = 10
-        betDecrease.y = 10
+        this.bet = new Bet({initialBet: window.game.gameModel.getBet(), onBetIncrease: this.onBetIncrease, onBetDecrease: this.onBetDecrease});
         this.footer.addChild(this.bet);
-        this.footer.addChild(betIncrease);
-        this.footer.addChild(betDecrease);
     }
 
     spin = () => {
