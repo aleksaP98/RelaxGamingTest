@@ -85,13 +85,23 @@ export default class GameModel{
     }
 
     _checkWinLine = (winLine) => {
+        let winlineWins = [];
         for(let reelIndex in winLine){
             const reelWins = winLine[reelIndex];
-            reelWins.forEach((win, symbolIndex) => {
-               if(this._winningMatrix[reelIndex][symbolIndex] && win){
-                    this.winningSymbols[reelIndex][symbolIndex] = window.game.reelsController.getOutcomeSymbols()[reelIndex][symbolIndex];
-               }
-            })
+            const symbolIndexWin = reelWins.findIndex(isWin => isWin);
+            const winFound = this._winningMatrix[reelIndex][symbolIndexWin];
+            const additionCondition = (reelIndex > 1 && winFound) ? winlineWins.find(winObject => winObject.reelIndex == Number(reelIndex) - 1) : true;
+            if(winFound && additionCondition){
+                winlineWins.push({
+                    reelIndex,
+                    symbolIndex: symbolIndexWin
+                })
+            }
+            if(reelIndex == 4 && winlineWins.length >= 3 && winlineWins.find(winObject => winObject.reelIndex == 0)){
+                winlineWins.forEach(winObject => {
+                    this.winningSymbols[winObject.reelIndex][winObject.symbolIndex] = window.game.reelsController.getOutcomeSymbols()[winObject.reelIndex][winObject.symbolIndex];
+                }) 
+            }
         }
     }
 
