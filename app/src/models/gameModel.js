@@ -1,3 +1,9 @@
+/**
+ * Main Game Model
+ * Handles spin outcome and core game elements (bets, balance, payout...)
+ * In the ideal world this class would only handle game features
+ * In this game its used as a replacement for the backend server
+ */
 export default class GameModel{
     /**
      * Default value when reseting is a matrix of outcome symbol names
@@ -80,9 +86,10 @@ export default class GameModel{
     }
     /**
      * Sets outcome for the current spin
+     * @param {Array}
      */
-    setOutcome = () => {
-        this._resetOutcome();
+    setOutcome = (outcomeSymbols) => {
+        this._resetOutcome(outcomeSymbols);
         this._resetWinningCounter();
         this._setWinningMatrix();
         this._checkForWinningSymbols();
@@ -93,8 +100,8 @@ export default class GameModel{
     /**
      * Reset all outcome arrays and variables to default states
      */
-    _resetOutcome = () => {
-        this._outcomeSymbols = window.game.reelsController.getOutcomeSymbols()
+    _resetOutcome = (outcomeSymbols) => {
+        this._outcomeSymbols = outcomeSymbols;
         this._outcomeNames = this._outcomeSymbols.map(reelOutcomes => reelOutcomes.map(outcomeSymbols => outcomeSymbols.model.name));
         this._winningSymbols = this._outcomeSymbols.map(reelOutcomes => reelOutcomes.map(outcomeSymbols => null));
         this._winningMatrix = this._outcomeNames.map((reel, reelIndex) => reel.map((symbolName, symbolIndex) => false));
@@ -168,7 +175,7 @@ export default class GameModel{
     }
 
     /**
-     * Compare winline and winning matrix to determen winning symbols
+     * Compare winline and winning matrix to determine winning symbols
      * @param {Matrix} winLine 
      */
     _checkWinLine = (winLine) => {
@@ -198,7 +205,7 @@ export default class GameModel{
             //4. all win objects must have the same name (name from first reel win object)
             if(reelIndex == 4 && winlineWins.length >= 3 && winlineWins.find(winObject => winObject.reelIndex == 0) && winlineWins.every(winObject => winObject.name === winlineWins[0].name)){
                 winlineWins.forEach(winObject => {
-                    this._winningSymbols[winObject.reelIndex][winObject.symbolIndex] = window.game.reelsController.getOutcomeSymbols()[winObject.reelIndex][winObject.symbolIndex];
+                    this._winningSymbols[winObject.reelIndex][winObject.symbolIndex] = this._outcomeSymbols[winObject.reelIndex][winObject.symbolIndex];
                 }) 
             }
         }
@@ -249,7 +256,7 @@ export default class GameModel{
     }
 
     /**
-     * Util function to determen the reel and symbol indexes based on the current seed index
+     * Util function to determine the reel and symbol indexes based on the current seed index
      * Should handle it like - index 0 is reelIndex 0, symbolIndex 0
      *                       - index 1 is reelIndex 1, symbolIndex 0
      *                       - index 2 is reelIndex 2, symbolIndex 0

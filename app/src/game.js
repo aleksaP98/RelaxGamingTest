@@ -1,10 +1,11 @@
 import Application from "./views/app.js";
+import GameModel from "./models/gameModel.js";
+import FlowModel from "./models/flowModel.js";
 import AssetsController from "./controllers/assetsController.js";
 import InterfaceController from "./controllers/interfaceController.js";
 import ReelsController from "./controllers/reelsController.js";
 import Background from "./views/background.js";
 import Reels from "./views/reels.js";
-import GameModel from "./models/gameModel.js";
 import Payout from "./views/payout.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -24,6 +25,7 @@ export default class Game{
             this._loadConfig()
             .then(this._initGameModel.bind())
             .then(this._initControllers.bind())
+            .then(this._setupFlowModel.bind())
             .then(this._loadAssets.bind())
             .then(this._createApp.bind())
             .then(this._addBackground.bind())
@@ -49,13 +51,22 @@ export default class Game{
 
     _initGameModel = () => {
         this.gameModel = new GameModel();
+        this.flowModel = new FlowModel(this.gameModel);
     }
 
+    
     _initControllers = () => {
         this.assetsController = new AssetsController();
         this.interfaceController = new InterfaceController();
         this.reelsController = new ReelsController();
-        return Promise.resolve();
+        return Promise.resolve([this.assetsController, this.interfaceController, this.reelsController]);
+    }
+
+    _setupFlowModel = (controllers) => {
+        return new Promise((resolve, reject) => {
+            controllers.forEach(this.flowModel.addController);
+            resolve();
+        })
     }
 
     _loadAssets = () => {
@@ -95,7 +106,7 @@ export default class Game{
     _createReels = () => {
         return new Promise((resolve, reject) => {
             this.reels = new Reels();
-            this.reelsController.addView({name: "reels", class: this.reels})
+            this.reelsController.addView({name: "reelsContainer", class: this.reels})
             this.stage.addChild(this.reels);
             resolve();
         })

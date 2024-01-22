@@ -1,10 +1,21 @@
-
+/**
+ * Assets Controller
+ * Main purpose of this controller is to handle assets.
+ * Currently it only loads all assets (can be upgraded to support lazy loading)
+ */
 export default class AssetsController{
+    name = "";
 
-    constructor(){
-        
+    constructor(name){
+        this.name = name ||  "assetsController"
     }
 
+    /**
+     * Handle asset loading by creating a pixi texture of every aset in the game config.
+     * For this game we only need images, but this would need to change if we were to add sounds or other file formats
+     * Resolves the promise when all images are set.
+     * @returns {Promise}
+     */
     _loadAssets = () =>{
         try{
             return new Promise((resolve, reject) => {
@@ -27,6 +38,11 @@ export default class AssetsController{
         }    
     }
 
+    /**
+     * 
+     * @param {String} name 
+     * @returns {PIXI.Texture}
+     */
     getAsset = (name) => { 
         return this[name];
     }
