@@ -1,3 +1,7 @@
+/**
+ * Balace View
+ * Has the balance text and the balance value as its children.
+ */
 export default class Balance extends PIXI.Container{
     constructor(options = {}){
         super()
@@ -40,6 +44,10 @@ export default class Balance extends PIXI.Container{
         this.y = 20
     }
 
+    /**
+     * Updates the balance value with the new value
+     * @param {Number} value 
+     */
     updateBalance = (value) => {
         this.balanceValue.text = value;
     }

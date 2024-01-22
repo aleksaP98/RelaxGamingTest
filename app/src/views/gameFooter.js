@@ -1,3 +1,7 @@
+/**
+ * Game Footer View
+ * Holds the other footer elements as its children
+ */
 export default class GameFooter extends PIXI.Container{
     constructor(){
         super();

@@ -1,5 +1,9 @@
 import Button from "./button.js";
 
+/**
+ * Bet View
+ * Has the Bet text and value, as well as the buttons for increasing and decresing of bet
+ */
 export default class Bet extends PIXI.Container{
     constructor(options = {}){
         super()

@@ -1,3 +1,7 @@
+/**
+ * Payout View
+ * Has the black overlay, and the actual value as its children.
+ */
 export default class Payout extends PIXI.Container{
     constructor(){
         super()

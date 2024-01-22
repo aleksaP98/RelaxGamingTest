@@ -1,3 +1,6 @@
+/**
+ * Background view for the base game
+ */
 export default class Background extends PIXI.Sprite{
     constructor(asset){
         if(asset && asset instanceof PIXI.Texture){

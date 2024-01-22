@@ -1,3 +1,8 @@
+/**
+ * Button View
+ * Sort of the only abstract class in this game.
+ * Can be used to create any button
+ */
 export default class Button extends PIXI.Container{
     constructor(onClickCallback, texture){
         super()
